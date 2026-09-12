@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DRACO AI</title>
+<style>
+:root{
+ --bg:#09090b;--panel:#0f1014;--panel2:#17181d;--line:#292a31;
+ --text:#f4f4f5;--muted:#9b9ca5;--accent:#8b5cf6;--accent2:#a78bfa;
+}
+*{box-sizing:border-box}
+html,body{margin:0;width:100%;height:100%;font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;background:var(--bg);color:var(--text)}
+body{overflow:hidden}
+button,input{font:inherit}
+button{cursor:pointer}
+.app{height:100vh;display:flex}
+
+/* LEFT */
+.sidebar{
+ width:265px;flex-shrink:0;background:#0b0c0f;border-right:1px solid var(--line);
+ display:flex;flex-direction:column;padding:14px 12px
+}
+.brand{height:54px;display:flex;align-items:center;gap:10px;padding:0 10px;margin-bottom:8px}
+.brand-icon{
+ width:36px;height:36px;border-radius:11px;display:grid;place-items:center;
+ background:linear-gradient(145deg,#8b5cf6,#5b21b6);box-shadow:0 5px 25px #8b5cf633;font-size:21px
+}
+.brand-name{font-size:18px;font-weight:800;letter-spacing:-.5px}.brand-name span{color:#a78bfa}
+.newchat{
+ width:100%;height:44px;border-radius:10px;border:1px solid #34353d;
+ background:#17181d;color:#fff;font-weight:650;text-align:left;padding:0 14px;
+ transition:.18s
+}
+.newchat:hover{background:#202127;border-color:#454650}
+.side-label{font-size:10px;font-weight:800;letter-spacing:1.2px;color:#71727c;margin:25px 11px 8px}
+.history{overflow:auto}
+.history div{
+ padding:10px 11px;border-radius:8px;color:#b6b7c0;font-size:13px;
+ white-space:nowrap;overflow:hidden;text-overflow:ellipsis;cursor:pointer
+}
+.history div:hover{background:#18191e;color:#eee}
+
+/* MAIN */
+.main{min-width:0;flex:1;display:flex;flex-direction:column}
+.topbar{
+ height:58px;flex-shrink:0;border-bottom:1px solid var(--line);
+ display:flex;align-items:center;justify-content:space-between;padding:0 22px
+}
+.model{font-size:14px;font-weight:700}.model small{font-size:11px;color:#777983;font-weight:500;margin-left:5px}
+.online{font-size:11px;color:#888a94;display:flex;align-items:center;gap:7px}
+.online i{width:6px;height:6px;border-radius:50%;background:#4ade80;box-shadow:0 0 9px #4ade80;display:block}
+
+.chat{flex:1;overflow-y:auto;padding:0 18px 150px}
+.chat::-webkit-scrollbar{width:8px}.chat::-webkit-scrollbar-thumb{background:#282930;border-radius:10px}
+
+.welcome{
+ min-height:100%;display:flex;flex-direction:column;justify-content:center;align-items:center;
+ text-align:center;padding-bottom:45px
+}
+.avatar{
+ width:64px;height:64px;border-radius:20px;display:grid;place-items:center;
+ background:linear-gradient(145deg,#8b5cf6,#4c1d95);
+ box-shadow:0 10px 45px #8b5cf629;font-size:35px;margin-bottom:22px
+}
+.welcome h1{font-size:32px;letter-spacing:-1.3px;margin:0 0 9px}
+.welcome p{color:#858792;font-size:14px;margin:0}
+.suggestions{display:grid;grid-template-columns:repeat(2,minmax(180px,270px));gap:9px;margin-top:28px}
+.suggestion{
+ background:#111216;border:1px solid #25262d;border-radius:12px;padding:12px 14px;
+ text-align:left;color:#c7c8ce;font-size:12px;transition:.18s
+}
+.suggestion b{display:block;color:#eee;font-size:12px;margin-bottom:3px}.suggestion span{color:#777983}
+.suggestion:hover{background:#18191f;border-color:#3a3b44;transform:translateY(-1px)}
+
+.message{width:min(850px,100%);margin:0 auto;padding:20px 8px;border-bottom:1px solid #18191e;line-height:1.65}
+.msg-head{display:flex;align-items:center;gap:10px;margin-bottom:8px;font-size:13px;font-weight:700}
+.msg-avatar{
+ width:28px;height:28px;border-radius:9px;display:grid;place-items:center;
+ background:#202127;font-size:15px
+}
+.ai .msg-avatar{background:linear-gradient(145deg,#8b5cf6,#4c1d95)}
+.msg-text{font-size:14px;color:#d8d8dc;white-space:pre-wrap;overflow-wrap:anywhere}
+.user .msg-text{color:#eee}
+.copy{
+ margin-top:11px;background:#17181d;border:1px solid #2b2c33;color:#9d9ea7;
+ border-radius:7px;padding:5px 9px;font-size:11px
+}
+.copy:hover{color:white;background:#202127}
+
+/* COMPOSER */
+.composer-wrap{
+ position:fixed;left:265px;right:0;bottom:0;padding:18px 18px 20px;
+ background:linear-gradient(to top,#09090b 62%,transparent)
+}
+.composer{width:min(850px,100%);margin:auto}
+.inputbox{
+ min-height:54px;display:flex;align-items:center;gap:7px;padding:5px 6px 5px 16px;
+ border:1px solid #34353d;border-radius:15px;background:#17181d;
+ box-shadow:0 8px 35px #00000066;transition:.2s
+}
+.inputbox:focus-within{border-color:#555663;box-shadow:0 8px 40px #00000088}
+#message{flex:1;min-width:0;background:transparent;border:0;outline:0;color:white;font-size:14px;padding:10px 0}
+#message::placeholder{color:#6f7079}
+.send{
+ width:40px;height:40px;border-radius:10px;background:#f4f4f5;color:#101014;
+ font-size:18px;font-weight:900;transition:.18s
+}
+.send:hover{transform:scale(1.04);background:white}
+.hint{text-align:center;color:#55565e;font-size:10px;margin-top:8px}
+
+/* MOBILE */
+@media(max-width:720px){
+ .sidebar{display:none}.composer-wrap{left:0}.topbar{padding:0 15px}
+ .chat{padding-left:12px;padding-right:12px}.message{padding-left:4px;padding-right:4px}
+ .welcome h1{font-size:27px}.suggestions{grid-template-columns:1fr;width:min(92%,380px)}
+}
+</style>
+</head>
+<body>
+<div class="app">
+<aside class="sidebar">
+ <div class="brand">
+  <div class="brand-icon">🐉</div>
+  <div class="brand-name">DRACO <span>AI</span></div>
+ </div>
+ <button class="newchat" onclick="newChat()">＋&nbsp; Nouvelle discussion</button>
+ <div class="side-label">RÉCENT</div>
+ <div class="history" id="history"></div>
+</aside>
+
+<main class="main">
+ <header class="topbar">
+  <div class="model">DRACO AI <small>• Assistant</small></div>
+  <div class="online"><i></i> En ligne</div>
+ </header>
+
+ <section class="chat" id="chat">
+  <div class="welcome" id="welcome">
+   <div class="avatar">🐉</div>
+   <h1>Que puis-je faire pour toi ?</h1>
+   <p>Discute, code et crée avec DRACO AI.</p>
+   <div class="suggestions">
+    <button class="suggestion" onclick="usePrompt('Génère-moi un script Roblox Lua')"><b>💻 Générer du code</b><span>Créer un script complet</span></button>
+    <button class="suggestion" onclick="usePrompt('Explique-moi ce code')"><b>🧠 Expliquer du code</b><span>Comprendre simplement</span></button>
+    <button class="suggestion" onclick="usePrompt('Donne-moi une idée de jeu Roblox')"><b>🎮 Idée de jeu</b><span>Trouver une nouvelle idée</span></button>
+    <button class="suggestion" onclick="usePrompt('Aide-moi à améliorer mon projet')"><b>⚡ Améliorer un projet</b><span>Des conseils étape par étape</span></button>
+   </div>
+  </div>
+ </section>
+
+ <div class="composer-wrap">
+  <div class="composer">
+   <div class="inputbox">
+    <input id="message" placeholder="Message à DRACO..." autocomplete="off">
+    <button class="send" onclick="sendMessage()" aria-label="Envoyer">↑</button>
+   </div>
+   <div class="hint">DRACO AI peut faire des erreurs. Vérifie toujours le code généré.</div>
+  </div>
+ </div>
+</main>
+</div>
+
+<script>
+const input=document.getElementById("message");
+const chat=document.getElementById("chat");
+const history=document.getElementById("history");
+let busy=false;
+
+input.addEventListener("keydown",e=>{if(e.key==="Enter"&&!e.shiftKey){e.preventDefault();sendMessage()}});
+function usePrompt(text){input.value=text;input.focus();sendMessage()}
+
+async function sendMessage(){
+ const text=input.value.trim(); if(!text||busy)return;
+ const welcome=document.getElementById("welcome"); if(welcome)welcome.remove();
+ addMessage("Vous",text,"user","👤");
+ input.value=""; addHistory(text); busy=true;
+ const typing=addMessage("DRACO","Réflexion…","ai","🐉",true);
+ try{
+   const res=await fetch("/api/chat",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({message:text})});
+   const data=await res.json();
+   if(!res.ok)throw new Error(data.error||"Erreur serveur");
+   typing.remove(); addMessage("DRACO",data.reply||"Je n'ai pas reçu de réponse.","ai","🐉");
+ }catch(err){
+   typing.remove();
+   addMessage("DRACO",`❌ ${err.message}\n\nVérifie que le serveur DRACO est lancé et que OPENAI_API_KEY est configurée.`,"ai","🐉");
+ }finally{busy=false;input.focus()}
+}
+
+function addMessage(name,text,type,icon,typing=false){
+ const box=document.createElement("div");box.className="message "+type;
+ const head=document.createElement("div");head.className="msg-head";
+ const av=document.createElement("div");av.className="msg-avatar";av.textContent=icon;
+ const n=document.createElement("span");n.textContent=name; head.append(av,n);
+ const body=document.createElement("div");body.className="msg-text";body.textContent=text;
+ box.append(head,body);
+ if(type==="ai"&&!typing){
+   const copy=document.createElement("button");copy.className="copy";copy.textContent="Copier";
+   copy.onclick=async()=>{try{await navigator.clipboard.writeText(text);copy.textContent="Copié ✓";setTimeout(()=>copy.textContent="Copier",1200)}catch{}};
+   box.appendChild(copy);
+ }
+ chat.appendChild(box);chat.scrollTop=chat.scrollHeight;return box;
+}
+function addHistory(text){const item=document.createElement("div");item.textContent=text;history.prepend(item)}
+function newChat(){
+ chat.innerHTML=`<div class="welcome" id="welcome"><div class="avatar">🐉</div><h1>Que puis-je faire pour toi ?</h1><p>Discute, code et crée avec DRACO AI.</p><div class="suggestions">
+ <button class="suggestion" onclick="usePrompt('Génère-moi un script Roblox Lua')"><b>💻 Générer du code</b><span>Créer un script complet</span></button>
+ <button class="suggestion" onclick="usePrompt('Explique-moi ce code')"><b>🧠 Expliquer du code</b><span>Comprendre simplement</span></button>
+ <button class="suggestion" onclick="usePrompt('Donne-moi une idée de jeu Roblox')"><b>🎮 Idée de jeu</b><span>Trouver une nouvelle idée</span></button>
+ <button class="suggestion" onclick="usePrompt('Aide-moi à améliorer mon projet')"><b>⚡ Améliorer un projet</b><span>Des conseils étape par étape</span></button></div></div>`;
+ input.focus();
+}
+</script>
+</body>
+</html>
