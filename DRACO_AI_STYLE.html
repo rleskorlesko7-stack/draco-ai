@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DRACO AI — L'IA Roblox qui crée tes scripts</title>
+<style>
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;color:#fff;background:#061426;overflow-x:hidden}button,input,textarea{font:inherit}
+.hero{min-height:100vh;position:relative;overflow:hidden;background:radial-gradient(circle at 50% 12%,#178bd4 0,#0b4d87 30%,#062b51 62%,#041426 100%)}
+.hero:before{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,8,20,.12),rgba(0,10,25,.38) 55%,rgba(1,7,17,.9));pointer-events:none}
+.grid{position:absolute;inset:0;opacity:.18;background-image:linear-gradient(rgba(255,255,255,.07) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.07) 1px,transparent 1px);background-size:90px 90px;mask-image:linear-gradient(to bottom,transparent,#000 20%,#000 70%,transparent)}
+.orb{position:absolute;border-radius:50%;filter:blur(40px);opacity:.35}.o1{width:280px;height:280px;background:#00d9ff;left:-80px;top:210px}.o2{width:350px;height:350px;background:#6f4bff;right:-130px;top:360px}.o3{width:200px;height:200px;background:#00a6ff;left:42%;bottom:30px}
+.island{position:absolute;bottom:-110px;left:-5%;width:110%;height:360px;background:linear-gradient(180deg,#194f4a,#0c302e);border-radius:50% 50% 0 0;box-shadow:0 -25px 80px rgba(0,0,0,.28)}
+.island:before{content:"";position:absolute;left:12%;top:30px;width:230px;height:150px;background:#245f58;border-radius:50%;transform:rotate(-7deg);box-shadow:550px 55px 0 40px #174640,900px -10px 0 20px #235e58}
+.mountain{position:absolute;bottom:140px;width:0;height:0;border-left:180px solid transparent;border-right:180px solid transparent;border-bottom:250px solid rgba(12,64,93,.75);filter:drop-shadow(0 15px 35px rgba(0,0,0,.25))}.m1{left:-40px}.m2{right:80px;border-left-width:240px;border-right-width:240px;border-bottom-width:320px;opacity:.7}.m3{left:38%;bottom:160px;border-left-width:130px;border-right-width:130px;border-bottom-width:190px;opacity:.5}
+.floating{position:absolute;background:rgba(18,38,61,.8);border:1px solid rgba(255,255,255,.15);box-shadow:0 15px 45px rgba(0,0,0,.25);backdrop-filter:blur(12px);border-radius:20px}.cube{width:70px;height:70px;display:grid;place-items:center;font-size:34px}.c1{left:7%;top:39%;transform:rotate(-8deg)}.c2{right:7%;top:42%;transform:rotate(9deg)}
+.nav{position:relative;z-index:10;margin:16px auto 0;width:min(1500px,calc(100% - 32px));height:78px;border-radius:24px;padding:0 22px;background:rgba(239,246,252,.84);backdrop-filter:blur(18px);display:flex;align-items:center;gap:30px;color:#173044;box-shadow:0 14px 40px rgba(0,0,0,.16)}
+.logo{display:flex;align-items:center;gap:10px;font-size:22px;font-weight:900;letter-spacing:-1px;white-space:nowrap;color:#08121e}.dragon{width:39px;height:39px;border-radius:12px;display:grid;place-items:center;background:linear-gradient(145deg,#12d5ff,#6e4dff);box-shadow:0 8px 24px rgba(0,191,255,.35);font-size:23px}.links{display:flex;gap:34px;margin-left:auto;align-items:center}.links a{text-decoration:none;color:#536a7a;font-size:16px;font-weight:600}.links a:hover{color:#102a40}.actions{display:flex;gap:10px;align-items:center}.discord{width:48px;height:48px;border-radius:50%;border:1px solid #d7e2ea;background:#fff;display:grid;place-items:center;font-size:22px}.login{font-weight:700;color:#1a3549;padding:12px 10px}.create{border:0;background:#fff;color:#193044;font-weight:800;border-radius:28px;padding:14px 24px;box-shadow:0 5px 15px rgba(0,0,0,.08)}
+.heroContent{position:relative;z-index:5;text-align:center;max-width:1050px;margin:45px auto 0;padding:0 20px}.joined{display:inline-flex;align-items:center;gap:9px;background:rgba(7,25,43,.72);border:1px solid rgba(255,255,255,.15);border-radius:28px;padding:9px 17px;font-weight:750;box-shadow:0 12px 30px rgba(0,0,0,.18)}.avatars{display:flex}.avatars span{width:28px;height:28px;border-radius:50%;display:grid;place-items:center;background:linear-gradient(145deg,#12c7ff,#7657ff);border:2px solid #fff;margin-left:-5px;font-size:13px}.avatars span:first-child{margin-left:0}
+h1{font-size:clamp(48px,7vw,92px);line-height:.94;margin:28px 0 18px;font-weight:950;letter-spacing:-4px;text-transform:uppercase;text-shadow:0 10px 30px rgba(0,0,0,.18)}h1 .cyan{display:block;background:linear-gradient(90deg,#00cfff,#12a9ff,#00f0e5,#79e4ff);-webkit-background-clip:text;background-clip:text;color:transparent;text-shadow:none} .subtitle{font-size:clamp(16px,2vw,22px);line-height:1.55;color:#d9e8f2;max-width:830px;margin:auto;text-shadow:0 3px 12px rgba(0,0,0,.25)}
+.pills{display:flex;justify-content:center;flex-wrap:wrap;gap:10px;margin:24px 0 24px}.pill{padding:12px 17px;border-radius:24px;background:rgba(7,24,41,.72);border:1px solid rgba(255,255,255,.12);font-weight:700;color:#e5f2fa;box-shadow:0 8px 24px rgba(0,0,0,.16)}
+.cards{height:255px;position:relative;max-width:1100px;margin:0 auto}.card{position:absolute;width:170px;height:245px;background:#f7fbfd;color:#223442;border-radius:22px;padding:9px;box-shadow:0 18px 45px rgba(0,0,0,.25);border:4px solid #fff;text-align:left}.card .thumb{height:125px;border-radius:14px;display:grid;place-items:center;font-size:54px;background:linear-gradient(135deg,#1dd5ff,#7148ff);overflow:hidden}.card:nth-child(2) .thumb{background:linear-gradient(135deg,#ff4d8d,#ffd83d)}.card:nth-child(3) .thumb{background:linear-gradient(135deg,#7d4cff,#00d5ff)}.card:nth-child(4) .thumb{background:linear-gradient(135deg,#00d49c,#55d9ff)}.card:nth-child(5) .thumb{background:linear-gradient(135deg,#ffad32,#ff5c72)}.card:nth-child(6) .thumb{background:linear-gradient(135deg,#b94cff,#3b76ff)}.card h3{font-size:15px;margin:9px 3px 8px}.stats{font-size:11px;color:#8495a0;display:flex;justify-content:space-between}.gain{font-size:11px;font-weight:850;color:#f2bd24;margin-top:7px}.card:nth-child(1){left:3%;top:18px;transform:rotate(-9deg)}.card:nth-child(2){left:18%;top:4px;transform:rotate(-4deg)}.card:nth-child(3){left:34%;top:-3px;transform:rotate(1deg);z-index:3}.card:nth-child(4){left:50%;top:-3px;transform:rotate(4deg);z-index:4}.card:nth-child(5){left:66%;top:8px;transform:rotate(7deg);z-index:2}.card:nth-child(6){left:81%;top:25px;transform:rotate(10deg)}
+.promptWrap{position:relative;z-index:8;max-width:940px;margin:-5px auto 0;padding:0 20px}.prompt{min-height:190px;background:rgba(7,24,39,.91);border:1px solid rgba(255,255,255,.1);border-radius:30px;box-shadow:0 25px 65px rgba(0,0,0,.32);padding:25px 28px;backdrop-filter:blur(16px);display:flex;flex-direction:column}.prompt textarea{resize:none;flex:1;min-height:95px;background:transparent;border:0;outline:0;color:#fff;font-size:22px;font-weight:650}.prompt textarea::placeholder{color:#f0f5f8}.promptBottom{display:flex;justify-content:space-between;align-items:center}.iconBtn,.magic{border:0;color:#e6f3fa;background:#1d3448;width:52px;height:52px;border-radius:50%;display:grid;place-items:center;font-size:22px}.rightBtns{display:flex;gap:10px}.send{border:0;width:62px;height:62px;border-radius:50%;font-size:25px;color:#fff;background:linear-gradient(145deg,#00d7ff,#1389ff);box-shadow:0 8px 25px rgba(0,185,255,.35)}
+.features{display:flex;justify-content:center;gap:35px;flex-wrap:wrap;color:#b7cad6;font-size:15px;font-weight:700;margin:20px auto 40px}.feature{display:flex;gap:8px;align-items:center}.feature b{color:#fff}
+.demo{display:none;position:fixed;z-index:30;left:50%;top:50%;transform:translate(-50%,-50%);width:min(760px,92vw);background:#09192a;border:1px solid #2d506b;border-radius:24px;box-shadow:0 30px 100px rgba(0,0,0,.55);padding:25px}.demo.show{display:block}.demo h2{margin:0 0 8px}.demo p{color:#a9bfce}.demo pre{background:#05101d;border-radius:14px;padding:18px;overflow:auto;color:#bfeaff}.close{float:right;border:0;background:#20384c;color:#fff;border-radius:10px;padding:8px 12px}
+@media(max-width:900px){.links{display:none}.nav{height:68px}.login{display:none}.cards{transform:scale(.82);transform-origin:top center;margin-bottom:-30px}.heroContent{margin-top:32px}h1{letter-spacing:-2px}.card:nth-child(1){left:0}.card:nth-child(2){left:16%}.card:nth-child(3){left:32%}.card:nth-child(4){left:48%}.card:nth-child(5){left:64%}.card:nth-child(6){left:80%}}
+@media(max-width:650px){.nav{width:calc(100% - 18px);margin-top:9px;padding:0 12px;border-radius:18px}.logo{font-size:18px}.dragon{width:35px;height:35px}.create{padding:11px 15px}.discord{width:42px;height:42px}.heroContent{margin-top:28px}.joined{font-size:12px}h1{font-size:48px;margin-top:20px}.subtitle{font-size:15px}.pills{gap:7px}.pill{font-size:12px;padding:9px 11px}.cards{height:190px;transform:scale(.53);width:900px;left:50%;margin-left:-450px}.promptWrap{margin-top:0}.prompt{min-height:165px;padding:19px;border-radius:23px}.prompt textarea{font-size:17px;min-height:75px}.features{font-size:12px;gap:14px;margin-bottom:20px}.feature:nth-child(3){display:none}}
+</style>
+</head>
+<body>
+<section class="hero" id="home">
+  <div class="grid"></div><div class="orb o1"></div><div class="orb o2"></div><div class="orb o3"></div>
+  <div class="mountain m1"></div><div class="mountain m2"></div><div class="mountain m3"></div><div class="island"></div>
+  <div class="floating cube c1">🐉</div><div class="floating cube c2">💻</div>
+
+  <nav class="nav">
+    <div class="logo"><div class="dragon">🐉</div>DRACO AI</div>
+    <div class="links"><a href="#scripts">Exemples</a><a href="#how">Comment ça marche</a><a href="#reviews">Avis</a><a href="#pricing">Tarifs</a><a href="#faq">FAQ</a></div>
+    <div class="actions"><button class="discord" title="Discord">◉</button><button class="login">Se connecter</button><button class="create" onclick="focusPrompt()">Créer mon script</button></div>
+  </nav>
+
+  <div class="heroContent">
+    <div class="joined"><div class="avatars"><span>🐉</span><span>⚡</span><span>🎮</span><span>💻</span></div> Rejoins +10 000 créateurs</div>
+    <h1>DÉCRIS TON SCRIPT.<span class="cyan">ON LE CRÉE POUR TOI.</span></h1>
+    <p class="subtitle">DRACO AI est l’IA pour Roblox qui transforme une simple idée en script Lua prêt à utiliser : systèmes de jeu, interfaces, mécaniques, sauvegarde et bien plus.</p>
+    <div class="pills"><span class="pill">⌁ Roblox Studio</span><span class="pill">⚡ Scripts Lua</span><span class="pill">✦ IA pour Roblox</span></div>
+  </div>
+
+  <div class="cards" id="scripts">
+    <article class="card"><div class="thumb">🛡️</div><h3>Admin Panel</h3><div class="stats"><span>⚙️ Système</span><span>✓ 98%</span></div><div class="gain">✦ Script généré</div></article>
+    <article class="card"><div class="thumb">💰</div><h3>Tycoon System</h3><div class="stats"><span>⚙️ Gameplay</span><span>✓ 96%</span></div><div class="gain">✦ Script généré</div></article>
+    <article class="card"><div class="thumb">⚔️</div><h3>Combat System</h3><div class="stats"><span>⚙️ Combat</span><span>✓ 94%</span></div><div class="gain">✦ Script généré</div></article>
+    <article class="card"><div class="thumb">🎒</div><h3>Inventory</h3><div class="stats"><span>⚙️ UI</span><span>✓ 97%</span></div><div class="gain">✦ Script généré</div></article>
+    <article class="card"><div class="thumb">🌳</div><h3>Simulator</h3><div class="stats"><span>⚙️ Gameplay</span><span>✓ 95%</span></div><div class="gain">✦ Script généré</div></article>
+    <article class="card"><div class="thumb">💾</div><h3>DataStore</h3><div class="stats"><span>⚙️ Sauvegarde</span><span>✓ 99%</span></div><div class="gain">✦ Script généré</div></article>
+  </div>
+
+  <div class="promptWrap">
+    <div class="prompt" id="promptBox">
+      <textarea id="prompt" placeholder="Un script qui..." aria-label="Décris ton script"></textarea>
+      <div class="promptBottom"><button class="iconBtn" title="Ajouter">⊞</button><div class="rightBtns"><button class="magic" title="Améliorer">✦</button><button class="send" onclick="generateDemo()">➤</button></div></div>
+    </div>
+  </div>
+  <div class="features"><div class="feature">⌁ <span><b>Sans prise de tête</b></span></div><div class="feature">◈ <span><b>Scripts personnalisés</b></span></div><div class="feature">↗ <span><b>Optimisé pour Roblox Studio</b></span></div></div>
+</section>
+
+<div class="demo" id="demo"><button class="close" onclick="closeDemo()">Fermer</button><h2>🐉 DRACO AI — aperçu</h2><p id="demoText"></p><pre>-- Exemple de script Roblox sécurisé\nlocal Players = game:GetService("Players")\n\nPlayers.PlayerAdded:Connect(function(player)\n    print("Bienvenue " .. player.Name)\nend)</pre></div>
+
+<script>
+function focusPrompt(){document.getElementById('prompt').focus();document.getElementById('promptBox').scrollIntoView({behavior:'smooth',block:'center'})}
+function generateDemo(){const p=document.getElementById('prompt').value.trim();if(!p){focusPrompt();return}document.getElementById('demoText').textContent='Tu as demandé : « '+p+' »\n\nCette version du site est une maquette front-end. Le branchement à une vraie IA pourra être ajouté ensuite avec un backend sécurisé.';document.getElementById('demo').classList.add('show')}
+function closeDemo(){document.getElementById('demo').classList.remove('show')}
+</script>
+</body>
+</html>
